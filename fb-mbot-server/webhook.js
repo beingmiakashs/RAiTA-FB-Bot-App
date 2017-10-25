@@ -48,7 +48,7 @@ app.post('/webhook', (req, res) => {
                         console.log(rootDomainName);
                         rootDomainName = rootDomainName.toLowerCase();
                         if(rootDomainName === 'stackoverflow.com') {
-                            sendMessage(event, 'Please wait, RAiTA is processing data to give the best answer for your question. Thanks');
+                            sendMessage(event, 'Please wait, RAiTA is processing data to give the best answer for your question. Thanks :) ');
                             url = 'http://210.4.73.237:4444/question-with-answers/?url='+url;
                             /*
                              client.get(url, function (data, response) {
@@ -77,12 +77,15 @@ app.post('/webhook', (req, res) => {
                                         console.log(answerBody);
                                         sendMessage(event, answerBody);
                                     }
-                                    sendMessage(event, "Thanks for your patience. These are the all answer of your questions with the acceptance probability.");
+                                    sendMessage(event, "Thanks for your patience :) . These are the all answers of your questions with the acceptance probability.");
+                                }
+                                else{
+                                    sendMessage(event, "Sorry :'( , an internal error has been occured, please try again");
                                 }
                             });
                         }
                         else{
-                            sendMessage(event, "Currently RAiTA supports only StackOverflow's questions. We are working hard, to add new questions answer community site in future updates. So please send any valid StackOverflow questions url. For example, if you want to know, how you can handle the great NULLPointerException, then you can try this question answers"+sampleQuestionURL);
+                            sendMessage(event, "Currently RAiTA supports only StackOverflow's questions. We are working hard, to add new questions answer community sites in future updates :D . So please send any valid StackOverflow questions url. For example, if you want to know, how you can handle the great NULLPointerException, then you can try this question answers"+sampleQuestionURL);
                         }
                     }
                     else{
