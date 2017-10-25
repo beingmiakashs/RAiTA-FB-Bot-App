@@ -12,14 +12,15 @@ const server = app.listen(process.env.PORT || 4446, () => {
 const request = require('request');
 //var createTextVersion = require("textversionjs");
 var htmlToText = require('html-to-text');
+var sampleQuestionURL = 'https://stackoverflow.com/questions/271526/avoiding-null-statements';
 
 var options = {
                 mimetypes: {
                         json: ["application/json", "application/my-custom-content-type-for-json;charset=utf-8"]
-                        
+
                     }
                 };
-var Client = require('node-rest-client').Client; 
+var Client = require('node-rest-client').Client;
 var client = new Client(options);
 
 
@@ -35,50 +36,61 @@ app.get('/webhook', (req, res) => {
 
 /* Handling all messenges */
 app.post('/webhook', (req, res) => {
-  console.log(req.body);
-  if (req.body.object === 'page') {
-    req.body.entry.forEach((entry) => {
-      entry.messaging.forEach((event) => {
-        if (event.message && event.message.text) {
-           url = 'http://210.4.73.237:4444/question-with-answers/?url=https://stackoverflow.com/questions/13890935/does-pythons-time-time-return-the-local-or-utc-timestamp';
-           /*
-           client.get(url, function (data, response) {
-               // parsed response body as js object 
-               console.log('get data');
-               console.log(data);
-               // raw response 
-               //console.log(response);
-               sendMessage(event,data);
-           });
-           */
-           request({
-             url: url,
-             json: true
-           }, function (error, response, data) {
-               console.log(error);
-               console.log(response.statusCode);
-               if (!error && response.statusCode === 200) {
-                   //console.log(body) // Print the json response
-                   //var result = data["answer_count"];
-                   //console.log(result);
-                   for (x in data.answers){
-                       //answerBody = createTextVersion(data.answers[x]["body"]);
-                       answerBody = htmlToText.fromString(data.answers[x]["body"]);
-                       answerBody = textCutter(answerBody, 545);
-                       answerBody = answerBody+ "..." + "\n"+"Details: "+"https://stackoverflow.com/a/"+data.answers[x]["answer_id"];
-                       answerBody = answerBody+"\n"+"Answer Acceptance Probability:"+data.answers[x]["acceptance_probability"]+"%";
-                       console.log(answerBody);
-                       sendMessage(event, answerBody);
-                   }
-                   //sendMessage(event, result);
-               }
-           }); 
-          //sendMessage(event);
-        }
-      });
-    });
-    res.status(200).end();
-  }
+    console.log(req.body);
+    if (req.body.object === 'page') {
+        req.body.entry.forEach((entry) => {
+            entry.messaging.forEach((event) => {
+                if (event.message && event.message.text) {
+                    var msg = event.message.text;
+                    if(isUrl(msg)){
+                        var rootDomainName = extractRootDomain(msg);
+                        rootDomainName = rootDomainName.toLowerCase();
+                        if(rootDomainName === 'stackoverflow.com') {
+                            url = msg;
+                            //url = 'http://210.4.73.237:4444/question-with-answers/?url=https://stackoverflow.com/questions/13890935/does-pythons-time-time-return-the-local-or-utc-timestamp';
+                            /*
+                             client.get(url, function (data, response) {
+                             // parsed response body as js object
+                             console.log('get data');
+                             console.log(data);
+                             // raw response
+                             //console.log(response);
+                             sendMessage(event,data);
+                             });
+                             */
+                            request({
+                                url: url,
+                                json: true
+                            }, function (error, response, data) {
+                                console.log(error);
+                                console.log(response.statusCode);
+                                if (!error && response.statusCode === 200) {
+                                    //var result = data["answer_count"];
+                                    for (x in data.answers) {
+                                        //answerBody = createTextVersion(data.answers[x]["body"]);
+                                        answerBody = htmlToText.fromString(data.answers[x]["body"]);
+                                        answerBody = textCutter(answerBody, 545);
+                                        answerBody = answerBody + "..." + "\n" + "Details: " + "https://stackoverflow.com/a/" + data.answers[x]["answer_id"];
+                                        answerBody = answerBody + "\n" + "Answer Acceptance Probability:" + data.answers[x]["acceptance_probability"] + "%";
+                                        console.log(answerBody);
+                                        sendMessage(event, answerBody);
+                                    }
+                                }
+                            });
+                        }
+                        else{
+                            sendMessage(event, "Currently RAiTA supports only StackOverflow's questions. We are working hard, to add new questions answer community site in future updates. So please send any valid StackOverflow questions url. For example, if you want to know, how you can handle the great NULLPointerException, then you can try this question answers"+sampleQuestionURL);
+                        }
+                    }
+                    else{
+                        sendMessage(event, "If you want the best answers of any StackOverflow questions then please enter that question web link. For example, if you want to know, how you can handle the great NULLPointerException, then you can try this question: "+sampleQuestionURL);
+                    }
+
+                }
+            });
+        });
+        res.status(200).end();
+    }
 });
 
 //const request = require('request');
@@ -111,7 +123,27 @@ function textCutter(text, n) {
    return short;
 }
 
-function isUrl(s) {
+function isUrl(inputMsg) {
+    var urlRegex = /(https?:\/\/[^ ]*)/;
+    var inputMsg   = inputMsg.match(urlRegex)[1];
    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-   return regexp.test(s);
+   return regexp.test(inputMsg);
+}
+
+function extractRootDomain(url) {
+    var domain = extractHostname(url),
+        splitArr = domain.split('.'),
+        arrLen = splitArr.length;
+
+    //extracting the root domain here
+    //if there is a subdomain
+    if (arrLen > 2) {
+        domain = splitArr[arrLen - 2] + '.' + splitArr[arrLen - 1];
+        //check to see if it's using a Country Code Top Level Domain (ccTLD) (i.e. ".me.uk")
+        if (splitArr[arrLen - 1].length == 2 && splitArr[arrLen - 1].length == 2) {
+            //this is using a ccTLD
+            domain = splitArr[arrLen - 3] + '.' + domain;
+        }
+    }
+    return domain;
 }
