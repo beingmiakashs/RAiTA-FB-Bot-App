@@ -258,10 +258,11 @@ def answers(request):
         question_response = requests.get(question_url)
         question_data = question_response.json()
         data = question_data['items']
-        
-        if(len(data)==0):
+        print(len(data))
+        print(data)        
+        if(len(data)<2):
             content = {"body": "", "question_url": url, "title": "", "question_score": "", "question_favorite_count": "", "answer_count": "", "answers": []}
-            
+            print("There is no answer for this question.")            
             result = json.dumps(content)
             return HttpResponse(result)	
 
