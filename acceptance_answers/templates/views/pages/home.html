@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Accepted Answer Prediction</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% load staticfiles %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="{% static 'css/home.css' %}">
+    </head>
+    <body>
+
+
+        <!-- Main navigation bar -->
+        <header class="navbar navbar-inverse navbar-fixed-top bs-docs-nav" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    </button>
+                    <a href="./" class="navbar-brand">RAiTA: Recommending Accepted Answer using Textual Metadata</a>
+                </div>
+                <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                    <ul class="nav navbar-nav navbar-right">
+                        <!--<li>
+                            <a href="#" data-toggle="modal" data-target="#publicationModal">PUBICATIONS</a>
+                        </li>-->
+			<li>
+                            <a href="#"  data-toggle="modal" data-target="#abstract">ABSTRACT</a>
+                        </li>
+
+                     <!--   <li>
+                            <a href="#"  data-toggle="modal" data-target="#authors">AUTHORS</a>
+                        </li>-->
+                        <li>
+                            <a href="#"  data-toggle="modal" data-target="#resource">RESOURCES</a>
+                        </li>
+                        <!--<li >
+                            <a href="#"  data-toggle="modal" data-target="#contactModal">CONTACT</a>
+                        </li>-->
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <!-- container body -->
+        <div class="body-wrapper">
+            <div class="container">
+                <div class="main-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="latf-col">
+                                <h1>RAiTA</h1>
+                                <p style="font-size: 20px;">RAiTA is a web application made for <a style="color: #337ab7;" href="https://www.stackoverflow.com" target="_blank">Stack Overflow</a> answer accptance probability prediction based on textual metadata/sentiment analysis of comments on a particular question.</p>
+                                <!-- <a href="#" data-toggle="modal" data-target="#about-raita" class="btn btn-default btn-custom">Learn More</a> -->
+                                <!-- modal -->
+                                <div class="modal fade" id="about-raita" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                <h4 class="modal-title" id="myModalLabel">About Raita</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h3></h3>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <!--
+                            https://stackoverflow.com/questions/13703720/converting-between-datetime-timestamp-and-datetime64
+                            -->
+                            {% comment %}<h3 class="text-center">https://stackoverflow.com/questions/13703720/converting-between-datetime-timestamp-and-datetime64</h3>
+                            {% endcomment %}
+                            <form class="form-wrapper cf" action="{% url 'question_with_answers' %}" method="post">
+                                {% csrf_token %}
+                                <input type="text" name="url" placeholder="Enter stackoverflow question link..." required>
+                                <button type="submit">Predict</button>
+                                <br>
+                                <p class="example">Example: https://stackoverflow.com/questions/13890935/does-pythons-time-time-return-the-local-or-utc-timestamp</p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+      <!--  <footer id="mainFooter" class="text-center">
+            <div class="footer-above" style="padding-top: 15px; background-color: #eeeeee; color: #333333">
+                <div class="container">
+                    <div class="row">
+                        <div style="margin-bottom: 15px;" class="footer-col col-md-4">
+                            <h3 style="text-transform: none; margin-bottom: 3px">Location</h3>
+                            <p>80, Satmasjid Road,
+                                <br>Dhanmondi, Dhaka 1205
+                                <br>Bangladesh
+                            </p>
+                        </div>
+                        <div style="margin-bottom: 15px;" class="footer-col col-md-4">
+                            <h3 style="text-transform: none; margin-bottom: 3px">Research Areas</h3>
+                            <ul style="font-size: 20px">
+                                <li>Machine Learning</li>
+                                <li>Sentiment Analysis of comments</li>
+                                <li>Accepted Answer Prediction</li>
+                            </ul>
+                        </div>
+                        <div style="margin-bottom: 15px;" class="footer-col col-md-4">
+                            <h3 style="text-transform: none; margin-bottom: 3px">About UIU</h3>
+                            <p>UIU is a private university in Bangladesh with the vision to become the center of excellence in teaching, learning and research in the South Asian region.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-below" style="padding: 15px; background-color: #dddddd; color: #333;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            Copyright &copy; Department of Computer Science and Engineering, United International University 2017
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>-->
+
+
+
+        <!-- modal -->
+        <div class="modal fade" id="publicationModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><strong>PUBLICATIONS</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div dir="ltr"><div><div><b style="background-color:transparent"><font color="#000000" face="georgia, serif" size="3">Journal Paper:</font></b></div><div><ul><li><font face="georgia, serif" size="3"><span style="line-height:1.5;background-color:transparent"><font color="#000000"><b>Md. Mofijul Islam, </b>Md. Abdur Razzaque,&nbsp;<span>Mohammad Mehedi Hassan,&nbsp;</span><span>Walaa Nagy,&nbsp;</span><span>Biao Song</span>, "<a href="http://ieeexplore.ieee.org/document/7933943/" target="_blank" rel="nofollow">Mobile Cloud-Based Big Healthcare Data Processing in Smart Cities.</a>" Accepted in IEEE Access Journal 2017.</font></span></font></li><li><font face="georgia, serif" size="3"><b style="line-height:1.5;background-color:transparent"><font color="#000000">Md. Mofijul Islam</font></b><font color="#000000"><span style="line-height:1.5;background-color:transparent">, Md. Ahasanuzzaman, Md. Abdur Razzaque, M. M. Hassan, Abdulhameed Alelaiwi, Yang Xian, <a href="http://link.springer.com/article/10.1186/s13638-015-0394-2" target="_blank" rel="nofollow">Target coverage through distributed clustering in directional sensor networks</a></span><span style="line-height:1.5;background-color:transparent">. EURASIP J. Wireless Communications and Networking. 167: (2015).</span></font></font></li></ul></div><div><b><font color="#000000" face="georgia, serif" size="3">Conference Paper:</font></b></div></div><div><ul><li><font color="#000000"><font size="3" style="font-family:georgia,serif"><font><span style="background-image:initial;background-color:transparent;background-repeat:initial"><span style="line-height:1.6;background-color:transparent"><span style="line-height:13.9636px;white-space:pre-wrap;background-color:rgb(254,254,254)"><b>Md. Mofijul Islam</b>, Md. Abdur Razzaque, and <span style="white-space:normal;line-height:28.8px;background-color:rgb(255,255,255)">Md. Jahidul Islam</span>,&nbsp;</span></span></span><span style="font-weight:normal;line-height:13.9636px;white-space:pre-wrap"><a href="http://ieeexplore.ieee.org/xpl/articleDetails.jsp?arnumber=7400696" rel="nofollow" style="text-decoration:underline" target="_blank"><i>A Genetic Algorithm for Virtual Machine Migration in Heterogeneous Mobile Cloud Computing</i></a></span><span style="font-weight:normal;background-color:rgb(254,254,254)"><span style="line-height:13.9636px;white-space:pre-wrap">, in proceedings of the 2nd International Conference on Networking Systems and Security (</span></span></font></font><font size="3" style="font-weight:normal;font-family:georgia,serif"><span style="background-color:rgb(254,254,254)"><span style="line-height:13.9636px;white-space:pre-wrap"><font size="3"><span style="background-image:initial;background-color:transparent;background-repeat:initial"><span style="line-height:1.6;background-color:transparent"><span style="line-height:25.6px;background-image:initial;background-color:transparent;background-repeat:initial"><span style="background-image:initial;background-color:transparent;background-repeat:initial"><span style="line-height:1.6;text-indent:0.5in;background-color:transparent"><font style="line-height:25.6px;text-indent:0px"><span style="line-height:13.9636px">NSysS-2016</span></font></span></span></span></span></span></font>)</span></span><span style="line-height:13.9636px;white-space:pre-wrap;background-color:rgb(254,254,254)">, IEEE-BUET, Dhaka, Bangladesh.</span></font></font></li><li><b style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;line-height:1.5;background-color:transparent">Md. Mofijul Islam</b><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;line-height:1.5;background-color:transparent">, Md. Ahasanuzzaman, Md. Abdur Razzaque, Mohammad Mehedi Hassan, Atif Alamri, </span><i style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;line-height:1.5;text-decoration:underline;background-color:transparent"><a href="http://ieeexplore.ieee.org/document/6920259/" target="_blank" rel="nofollow">A Distributed Clustering Algorithm for Target Coverage in Directional Sensor Network</a>,</i><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;line-height:1.5;background-color:transparent"> in proceedings of IEEE Asia Pacific Conference on Wireless and Mobile, Bali, Indonesia(2014).</span></li></ul><div><font color="#000000" face="georgia, serif" size="3"><b>Submitted Manuscript:</b></font></div><div><ul><li><font color="#000000" face="georgia, serif" size="3"><b>Md Mofijul Islam, </b>Sanjay Saha, Md Mahmudur Rahman, Swakkhar Shatabda, Dewan Md Farid, Abdollah Dehzangi, "iProtGly-SS: IdentifyingProtein Lysine Glycation Sites Using Sequence and Structure Based Features".</font><b style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium">(Under Review in a Journal)</b></li></ul></div><div><font color="#000000" face="georgia, serif" size="3"><br></font></div><div><div><b><font color="#000000" face="georgia, serif" size="3">Manuscript in Preparation:</font></b></div><div><ul><li><font color="#000000" face="georgia, serif" size="3">Sk. Shariful Islam Arafat,&nbsp;<b>Md. Mofijul Islam</b>,<b>&nbsp;</b></font><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">Md Shakil Hossain,&nbsp;</span><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">S M Al-Hossain Imam,&nbsp;</span><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">Md. Mahmudul Hasan, "Questions Recommender System for the Expert".</span></li><li><font color="#000000" face="georgia, serif" size="3">Sk. Shariful Islam Arafat,&nbsp;<b>Md. Mofijul Islam</b>,<b>&nbsp;</b></font><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">Md Shakil Hossain,&nbsp;</span><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">S M Al-Hossain Imam,&nbsp;</span><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">Md. Mahmudul Hasan, "Accepted Answer Recommendation through Textual Metadata"</span></li><li><font color="#000000" face="georgia, serif" size="3">Sk. Shariful Islam Arafat,&nbsp;<b>&nbsp;</b></font><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">Md Shakil Hossain,&nbsp;</span><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">S M Al-Hossain Imam,&nbsp;</span><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;background-color:transparent">Md. Mahmudul Hasan, <b>Md. Mofijul Islam</b>,"VIM : A Web Tool for Data Visualization and Knowledge Mining"</span></li></ul></div></div><div><p><b><font color="#000000" face="georgia, serif" size="5">Research Areas of Interest</font></b></p><ul><li><span style="color:rgb(0,0,0);font-family:georgia,serif;font-size:medium;line-height:1.5;background-color:transparent">Data Science and Machine Learning</span></li><li><font color="#000000" face="georgia, serif" size="3">Big Data and visualization</font></li><li><font color="#000000" face="georgia, serif" size="3">Natural Language Processing</font></li><li><span style="line-height:1.5;background-color:transparent"><font color="#000000" face="georgia, serif" size="3">Human-Computer Interaction</font></span></li><li><font color="#000000" face="georgia, serif" size="3">Cloud Computing and Mobile Cloud Computing</font></li><li><font color="#000000" face="georgia, serif" size="3">Mobile Application Development</font></li></ul></div></div></div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="contactModal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel"><strong>CONTACT</strong></h4>
+                    </div>
+                    <div class="modal-body">
+                        <p style="font-size: 20px">Md. Mofijul Islam (Akash)</p>
+                        <p style="font-size: 20px">Lecturer at Department of CSE, University of Dhaka</p>
+                        <p style="font-size: 20px"><strong>Email:</strong> <a style="color: #337ab7;" href="mailto:akash@cse.du.ac.bd" target="_blank">akash@cse.du.ac.bd</a></p>
+                        <p style="font-size: 20px"><strong>Website:</strong> <a style="color: #337ab7;" href="https://sites.google.com/site/mmiakashs/" target="_blank">https://sites.google.com/site/mmiakashs/</a></p>
+                        <p style="font-size: 20px"><strong>Cell:</strong> +880-1672881709</p>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+        <!-- modal -->
+        <div class="modal fade" id="resource" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">All Resources</h4>
+                    </div>
+                    <div class="modal-body">
+                        <table class="table">
+                            <tbody>
+                              <tr>
+                                <td>Comments.csv</td>
+                                <td><a href="https://drive.google.com/open?id=0B-cl-dtDKnb8NGs5ZzR6RkRaZmc" target="_blank">Download</a></td>
+                              </tr>
+                              <tr>
+                                <td>CommentsModefied.csv</td>
+                                <td><a href="https://drive.google.com/open?id=0B-cl-dtDKnb8SlFySlpya2hKblE" target="_blank">Download</a></td>
+                              </tr>
+                              <tr>
+                                <td>CommentsWithSentiments.csv</td>
+                                <td><a href="https://drive.google.com/open?id=0B-cl-dtDKnb8MHVuRWtuYVFvc0E" target="_blank">Download</a></td>
+                              </tr>
+
+                              <tr>
+                                <td>Source Code of this Tool</td>
+                                <td><a href="https://github.com/shaionbd/accepted-answer-prediction" target="_blank">Github Link</a></td>
+                              </tr>
+                            </tbody>
+                          </table>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+	<!-- modal -->
+        <div class="modal fade" id="abstract" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">ABSTRACT</h4>
+                    </div>
+                    <div class="modal-body text-justify">
+                    	<p style="font-size: 20px;">
+			With the increasing software developer community, questions answering(QA) sites, such as <a href="https://stackoverflow.com/" target="_blank">StackOverflow</a>, have been gaining its popularity. Hence, in recent years, millions of questions and answers are posted in <a href="https://stackoverflow.com/" target="_blank">StackOverflow</a>. As a result, it takes an enormous amount of effort to find out the suitable answer of a question. Luckily, <a href="https://stackoverflow.com/" target="_blank">StackOverflow</a> allows their community members to label an answer as an accepted answer. However, in the most of the questions answers are not marked as accepted answers. Therefore, there is a need to build a recommender system which can accurately suggest the most suitable answer to the questions. Contrary to the existing systems, in this work, we have utilized the textual features of the answers' comments with the other metadata of the answers to building the recommender system for predicting the accepted answer. In the experimentation, our system has achieved 89.7% accuracy to predict the accepted answer by utilizing the textual metadata as a feature. We have also deployed our recommendation system web application, which is publicly accessible: <a href="http://210.4.73.237:8888/" target="_blank">http://210.4.73.237:8888/</a>
+                   	</p>
+		    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- modal -->
+        <div class="modal fade" id="authors" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">AUTHORS</h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+
+
+        {% load staticfiles %}
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script type='text/javascript' src='https://api.stackexchange.com/js/2.0/all.js'></script>
+        <script src="{% static 'js/main.js' %}">
+        </script>
+
+    </body>
+</html>

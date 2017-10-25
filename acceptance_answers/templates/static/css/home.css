@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+
+/*navigation bar*/
+.navbar{
+    min-height: 80px;
+    background: #66BB6A;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #fff;
+}
+.navbar-inverse .navbar-nav>li>a {
+    color: #fff;
+}
+.navbar-inverse{
+    border-color: transparent;
+}
+.navbar-nav>li>a {
+    line-height: 50px;
+}
+
+.navbar-brand {
+    line-height: 50px;
+}
+
+.navbar-toggle{
+    margin-top: 22px;
+}
+
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover {
+    color: #fff;
+    background-color: #2E7D32;
+}
+
+
+.main-body{
+    background: #eee;
+    margin-top: 150px;
+    margin-bottom: 100px;
+}
+
+.main-body .latf-col{
+    padding: 50px;
+}
+
+.main-body .latf-col h1{
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+.main-body .latf-col .btn-custom{
+    background: #4CAF50;
+    color: #fff;
+}
+
+
+ /*    a {
+     color: #ccc;
+ } */
+
+    /*-------------------------------------*/
+
+    .cf:before, .cf:after{
+      content:"";
+      display:table;
+    }
+
+    .cf:after{
+      clear:both;
+    }
+
+    .cf{
+      zoom:1;
+    }
+
+    /*-------------------------------------*/
+
+    .form-wrapper {
+        width: 750px;
+        padding: 15px;
+        margin: 30px auto;
+        overflow: hidden;
+        background: #444;
+        background: rgba(0,0,0,.2);
+        -moz-border-radius: 10px;
+        -webkit-border-radius: 10px;
+        border-radius: 10px;
+        -moz-box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+        -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+        box-shadow: 0 1px 1px rgba(0,0,0,.4) inset, 0 1px 0 rgba(255,255,255,.2);
+    }
+
+    .form-wrapper input {
+        width: 610px;
+        height: 40px;
+        padding: 10px 20px;
+        float: left;
+        font: bold 15px 'lucida sans', 'trebuchet MS', 'Tahoma';
+        border: 0;
+        background: #eee;
+        -moz-border-radius: 3px 0 0 3px;
+        -webkit-border-radius: 3px 0 0 3px;
+        border-radius: 3px 0 0 3px;
+    }
+
+    .form-wrapper input:focus {
+        outline: 0;
+        background: #fff;
+        -moz-box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+        -webkit-box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+        box-shadow: 0 0 2px rgba(0,0,0,.8) inset;
+    }
+
+    .form-wrapper input::-webkit-input-placeholder {
+       color: #999;
+       font-weight: normal;
+       font-style: italic;
+    }
+
+    .form-wrapper input:-moz-placeholder {
+        color: #999;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    .form-wrapper input:-ms-input-placeholder {
+        color: #999;
+        font-weight: normal;
+        font-style: italic;
+    }
+
+    .form-wrapper button {
+		overflow: visible;
+        position: relative;
+        float: right;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+        height: 40px;
+        width: 110px;
+        font: bold 15px/40px 'lucida sans', 'trebuchet MS', 'Tahoma';
+        color: #fff;
+        text-transform: uppercase;
+        background: #3f9b44;
+        -moz-border-radius: 0 3px 3px 0;
+        -webkit-border-radius: 0 3px 3px 0;
+        border-radius: 0 3px 3px 0;
+        text-shadow: 0 -1px 0 rgba(0, 0 ,0, .3);
+    }
+
+    .form-wrapper button:hover{
+        background: #3f9b44;
+    }
+
+    .form-wrapper button:active,
+    .form-wrapper button:focus{
+        background:  #3f9b44;
+    }
+
+    .form-wrapper button:before {
+        content: '';
+        position: absolute;
+        border-width: 8px 8px 8px 0;
+        border-style: solid solid solid none;
+        border-color: transparent  #3f9b44 transparent;
+        top: 12px;
+        left: -6px;
+    }
+
+    .form-wrapper button:hover:before{
+        border-right-color:  #3f9b44;
+    }
+
+    .form-wrapper button:focus:before{
+        border-right-color:  #3f9b44;
+    }
+
+    .form-wrapper button::-moz-focus-inner {
+        border: 0;
+        padding: 0;
+    }
+.byline p{
+  text-align:center;
+  color:#c6c6c6;
+  font: bold 18px Arial, Helvetica, Sans-serif;
+  text-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+.byline p a{
+  color:#F48024;
+  text-decoration:none;
+}
+
+.example{
+    margin-top: 35px;
+}
+.navbar-brand{
+    font-size: 20px;
+    font-weight: 600;
+}
