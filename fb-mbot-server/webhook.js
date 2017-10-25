@@ -45,9 +45,11 @@ app.post('/webhook', (req, res) => {
                     if(isUrl(msg)){
                         var url = extractURL(msg);
                         var rootDomainName = extractRootDomain(url);
+                        console.log(rootDomainName);
                         rootDomainName = rootDomainName.toLowerCase();
                         if(rootDomainName === 'stackoverflow.com') {
-                            //url = 'http://210.4.73.237:4444/question-with-answers/?url=https://stackoverflow.com/questions/13890935/does-pythons-time-time-return-the-local-or-utc-timestamp';
+                            sendMessage(event, 'Please wait, RAiTA is processing data to give the best answer for your question. Thanks');
+                            url = 'http://210.4.73.237:4444/question-with-answers/?url='+url;
                             /*
                              client.get(url, function (data, response) {
                              // parsed response body as js object
@@ -75,6 +77,7 @@ app.post('/webhook', (req, res) => {
                                         console.log(answerBody);
                                         sendMessage(event, answerBody);
                                     }
+                                    sendMessage(event, "Thanks for your patience. These are the all answer of your questions with the acceptance probability.");
                                 }
                             });
                         }
