@@ -43,10 +43,10 @@ app.post('/webhook', (req, res) => {
                 if (event.message && event.message.text) {
                     var msg = event.message.text;
                     if(isUrl(msg)){
-                        var rootDomainName = extractRootDomain(msg);
+                        var url = extractURL(msg);
+                        var rootDomainName = extractRootDomain(url);
                         rootDomainName = rootDomainName.toLowerCase();
                         if(rootDomainName === 'stackoverflow.com') {
-                            url = msg;
                             //url = 'http://210.4.73.237:4444/question-with-answers/?url=https://stackoverflow.com/questions/13890935/does-pythons-time-time-return-the-local-or-utc-timestamp';
                             /*
                              client.get(url, function (data, response) {
@@ -124,10 +124,14 @@ function textCutter(text, n) {
 }
 
 function isUrl(inputMsg) {
+   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+   return regexp.test(inputMsg);
+}
+
+function extractURL(inputMsg) {
     var urlRegex = /(https?:\/\/[^ ]*)/;
     var inputMsg   = inputMsg.match(urlRegex)[1];
-   var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/
-   return regexp.test(inputMsg);
+    return inputMsg;
 }
 
 function extractRootDomain(url) {
